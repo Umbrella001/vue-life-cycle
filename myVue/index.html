@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{ message }}</h1>
+        <h1>count: {{ count }}</h1>
+    </div>
+
+    <script src="./myVue.js" type="text/javascript"></script>
+    <script>
+        var vm = new myVue({
+            el: '#app',
+            data(){
+                return{
+                    message: 'Vue生命周期',
+                    age: 1
+                }
+            },
+            computed:{
+                count: function(){
+                    return this.age + 1;
+                }
+            },
+            /**
+         * 初始化data数据
+         */
+        beforeCreate: function () {
+            console.group('-----------beforeCreate创建前状态-------------')
+            console.log('%c%s', 'color:red', 'el:' + this.$el); // undefined
+            console.log('%c%s', 'color:red', 'data:' + this.$data); // undefined
+            console.log('%c%s', 'color:red', 'message:' + this.message); // undefined
+            // alert('beforeCreate')
+        },
+        created: function () {
+            console.group('-----------created创建完毕状态-------------')
+            console.log('%c%s', 'color:red', 'el:' + this.$el); //  undefined
+            console.log('%c%s', 'color:red', 'data:' + this.$data); // 已经初始化
+            console.log('%c%s', 'color:red', 'message:' + this.message); // 已经初始化
+            // alert('created')
+        },
+        /**
+         * 完成了el的绑定
+         */
+        beforeMount: function () {
+            console.group('-----------beforeMount挂载前状态-------------')
+            console.log('%c%s', 'color:red', 'el:' + this.$el); //  已经初始化
+            console.log(this.$el); // 拿到页面未更新数据的DOM节点
+            console.log(this.$el.innerHTML); // 未挂载到页面
+            console.log('%c%s', 'color:red', 'data:' + this.$data); //  已经初始化 
+            console.log('%c%s', 'color:red', 'message:' + this.message); //  已经初始化
+            // alert('beforeMount')
+        },
+        mounted: function () {
+            console.group('-----------mounted挂载完毕状态-------------')
+            console.log('%c%s', 'color:red', 'el:' + this.$el); //  已经初始化            
+            console.log(this.$el); // 拿到页面已更新数据的DOM节点
+            console.log(this.$el.innerHTML); //  已挂载到页面
+            console.log('%c%s', 'color:red', 'data:' + this.$data); //  已经初始化
+            console.log('%c%s', 'color:red', 'message:' + this.message); // 已经初始化
+            // alert('mounted')
+        }
+        })
+    </script>
+</body>
+
+</html>
